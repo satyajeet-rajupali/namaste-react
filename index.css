@@ -76,3 +76,9 @@
     color: inherit;
     text-decoration: inherit;
 }
+
+.user-card {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+}
