@@ -71,3 +71,8 @@
 .filter { 
     display: flex;
 }
+
+.router-link {
+    color: inherit;
+    text-decoration: inherit;
+}
