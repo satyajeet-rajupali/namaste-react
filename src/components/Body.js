@@ -3,50 +3,13 @@ import { useEffect, useState } from "react";
 import { swiggy_api_URL } from "../utils/constants";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useRestaurantList from "../utils/useRestaurantList";
 
 
 const Body = () => {
 
-    const [listOfRestaurants, setListOfRestaurants] = useState([]);
-    const [filteredListOfRestaurants, setFilteredListOfRestaurants] = useState([]);
     const [searchText, setSearchText] = useState("");
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
-
-        try {
-            const response = await fetch(swiggy_api_URL);
-            const json = await response.json();
-
-            // initialize checkJsonData() function to check Swiggy Restaurant data
-            async function checkJsonData(jsonData) {
-                for (let i = 0; i < jsonData?.data?.cards.length; i++) {
-
-                    // initialize checkData for Swiggy Restaurant data
-                    let checkData = json?.data?.cards[i]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
-
-                    // if checkData is not undefined then return it
-                    if (checkData !== undefined) {
-                        return checkData;
-                    }
-                }
-            }
-
-            // call the checkJsonData() function which return Swiggy Restaurant data
-            const resData = await checkJsonData(json);
-
-            console.log(resData);
-
-            // update the state variable restaurants with Swiggy API data
-            setListOfRestaurants(resData);
-            setFilteredListOfRestaurants(resData);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    const { listOfRestaurants, filteredListOfRestaurants, setFilteredListOfRestaurants } = useRestaurantList();
 
     // Conditional Rendering
     return listOfRestaurants.length === 0 ? <Shimmer /> : (
