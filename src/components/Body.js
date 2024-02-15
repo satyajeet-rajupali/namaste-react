@@ -1,15 +1,21 @@
 import RestaurantCard from "./RestaurantCard";
-import { useEffect, useState } from "react";
-import { swiggy_api_URL } from "../utils/constants";
+import { useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useRestaurantList from "../utils/useRestaurantList";
-
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
 
     const [searchText, setSearchText] = useState("");
     const { listOfRestaurants, filteredListOfRestaurants, setFilteredListOfRestaurants } = useRestaurantList();
+    const onlineStatus = useOnlineStatus();
+
+
+    if (onlineStatus === false)
+        return (
+            <h1>Seems like your internet has left you like your luck</h1>
+        );
 
     // Conditional Rendering
     return listOfRestaurants.length === 0 ? <Shimmer /> : (
