@@ -20,26 +20,29 @@ const Body = () => {
     // Conditional Rendering
     return listOfRestaurants.length === 0 ? <Shimmer /> : (
         <div className="body">
-            <div className="filter">
-                <div className="search">
-                    <input type="text" className="search-box" value={searchText} onChange={(e) => {
+            <div className="flex bg-white">
+                <div className="m-4 p-4">
+                    <input type="text" className="border border-solid border-black" value={searchText} onChange={(e) => {
                         setSearchText(e.target.value);
                     }} />
-                    <button className="search-btn" onClick={() => {
+                    <button className="px-4 py-2 m-4 bg-green-100 rounded-lg" onClick={() => {
                         const filteredList = listOfRestaurants.filter((res) => res.info.name.toLowerCase().includes(searchText.toLowerCase()));
                         setFilteredListOfRestaurants(filteredList);
                     }}>Search</button>
                 </div>
-                <button className="filter-btn" onClick={() => {
-                    const filteredList = filteredListOfRestaurants.filter((res) => res.info.avgRating > 4);
-                    setFilteredListOfRestaurants(filteredList);
-                }}>Top Rated Restaurant</button>
+                <div className="m-4 p-4 flex items-center">
+                    <button className="px-4 py-2 m-4 bg-gray-100 rounded-lg" onClick={() => {
+                        const filteredList = filteredListOfRestaurants.filter((res) => res.info.avgRating > 4);
+                        setFilteredListOfRestaurants(filteredList);
+                    }}>Top Rated Restaurant</button>
+                </div>
             </div>
-
-            <div className="res-container">
-                {filteredListOfRestaurants.map(restaurant => (
-                    <Link className="router-link" key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}><RestaurantCard resData={restaurant} /></Link>
-                ))}
+            <div className="flex flex-wrap justify-center bg-red-300">
+                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 bg-white">
+                    {filteredListOfRestaurants.map(restaurant => (
+                        <Link className="router-link" key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}><RestaurantCard resData={restaurant} /></Link>
+                    ))}
+                </div>
             </div>
         </div>
     );
