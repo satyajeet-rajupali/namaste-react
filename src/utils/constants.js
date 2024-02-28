@@ -8,3 +8,4 @@ export const MENU_API_URL = "https://www.swiggy.com/dapi/menu/pl?page-type=REGUL
 
 export const MENU_ITEM_TYPE_KEY = "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory";
 export const RESTAURANT_TYPE_KEY = "type.googleapis.com/swiggy.presentation.food.v2.Restaurant";
+export const MENU_NESTED_ITEM_TYPE_KEY = "type.googleapis.com/swiggy.presentation.food.v2.NestedItemCategory"

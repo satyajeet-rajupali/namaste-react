@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { RESTAURANT_TYPE_KEY, MENU_ITEM_TYPE_KEY, MENU_API_URL } from "../utils/constants";
+import { RESTAURANT_TYPE_KEY, MENU_ITEM_TYPE_KEY, MENU_NESTED_ITEM_TYPE_KEY, MENU_API_URL } from "../utils/constants";
 
 const useRestaurantMenu = (resId) => {
 
@@ -13,34 +13,27 @@ const useRestaurantMenu = (resId) => {
     const fetchMenu = async () => {
 
         const data = await fetch(MENU_API_URL + resId);
-
-
         const json = await data.json();
 
         const restaurantData = json?.data?.cards?.map(x => x.card)?.
             find(x => x && x.card['@type'] === RESTAURANT_TYPE_KEY)?.card?.info || null;
 
-        const menuItemsData = json?.data?.cards.find(x => x.groupedCard)?.
+        const categories = json?.data?.cards.find(x => x.groupedCard)?.
             groupedCard?.cardGroupMap?.REGULAR?.
             cards?.map(x => x.card?.card)?.
-            filter(x => x['@type'] == MENU_ITEM_TYPE_KEY)?.
-            map(x => x.itemCards).flat().map(x => x.card?.info) || [];
+            filter((x) => (x['@type'] === MENU_ITEM_TYPE_KEY || x['@type'] === MENU_NESTED_ITEM_TYPE_KEY));
 
-        const uniqueMenuItems = [];
-        menuItemsData.forEach((item) => {
-            if (!uniqueMenuItems.find(x => x.id === item.id)) {
-                uniqueMenuItems.push(item);
+        const finalCategories = categories.map((item) => {
+            if (item['@type'] === MENU_ITEM_TYPE_KEY) {
+                return item;
             }
-        })
+            else {
+                return item?.categories?.flat();
+            }
+        }).flat();
 
         setResInfo(restaurantData);
-        setMenuInfo(uniqueMenuItems);
-
-        // console.log("Restaurant Data", restaurantData);
-        // console.log("Restaurant Menu Data", uniqueMenuItems);
-
-        console.log("URL", MENU_API_URL + resId)
-
+        setMenuInfo(finalCategories);
     }
     return { resInfo, menuInfo };
 }
