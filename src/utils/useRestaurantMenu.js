@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { RESTAURANT_TYPE_KEY, MENU_ITEM_TYPE_KEY, MENU_API_URL } from "../utils/constants";
 
 const useRestaurantMenu = (resId) => {
-    
+
     const [resInfo, setResInfo] = useState(null);
     const [menuInfo, setMenuInfo] = useState([]);
 
@@ -13,6 +13,7 @@ const useRestaurantMenu = (resId) => {
     const fetchMenu = async () => {
 
         const data = await fetch(MENU_API_URL + resId);
+
 
         const json = await data.json();
 
@@ -34,6 +35,11 @@ const useRestaurantMenu = (resId) => {
 
         setResInfo(restaurantData);
         setMenuInfo(uniqueMenuItems);
+
+        // console.log("Restaurant Data", restaurantData);
+        // console.log("Restaurant Menu Data", uniqueMenuItems);
+
+        console.log("URL", MENU_API_URL + resId)
 
     }
     return { resInfo, menuInfo };

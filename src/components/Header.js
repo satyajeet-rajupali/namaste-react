@@ -9,11 +9,11 @@ const Header = () => {
     const onlineStatus = useOnlineStatus();
 
     return (
-        <div className="flex justify-between bg-pink-100 shadow-lg mb-2">
-            <div className="logo-container">
+        <div className="flex justify-between shadow-lg mb-2">
+            <div className="logo-container flex items-center justify-center px-2">
                 <img src={LOGO_URL} alt="Logo" className="logo w-56" />
             </div>
-            <div className="flex items-center">
+            <div className="flex shrink items-center">
                 <ul className="flex p-4 m-4">
                     <li className="px-4">
                         Online Status - {onlineStatus ? "✅" : "❌"}
@@ -31,7 +31,7 @@ const Header = () => {
                         <Link className="router-link" to="/grocery">Grocery</Link>
                     </li>
                     <li className="px-4">Cart</li>
-                    <button 
+                    <button
                         onClick={
                             () => {
                                 btnName === "Login" ?
