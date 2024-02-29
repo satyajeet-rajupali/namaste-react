@@ -13,8 +13,6 @@ const Body = () => {
 
     const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
-    console.log("Body Rendered", listOfRestaurants);
-
     if (onlineStatus === false)
         return (
             <h1>Seems like your internet has left you like your luck</h1>
